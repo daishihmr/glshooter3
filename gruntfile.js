@@ -1,4 +1,6 @@
 var SOURCES = [
+    "scripts/_pre.js",
+    "scripts/asset/font.js",
     "scripts/main.js",
 ];
 

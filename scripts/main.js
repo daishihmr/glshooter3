@@ -1,6 +1,8 @@
 tm.main(function() {
     gls3.app = tm.display.CanvasApp();
-    document.body.appendChild(gls3.app.element);
+    var canvasElement = tm.dom.Element(gls3.app.element);
+
+    tm.dom.Element("body").prepend(canvasElement);
     gls3.app.resize(gls3.W, gls3.H).fitWindow();
 
     gls3.app.pushScene(tm.ui.LoadingScene({

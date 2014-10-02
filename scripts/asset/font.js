@@ -4,22 +4,22 @@ tm.define("tm.asset.WebFont", {
     init: function(path, key) {
         this.superInit();
 
-        var tester = document.createElement("span");
-        tester.style.fontFamily = "'{0}', 'monospace'".format(key);
-        tester.style.color = "rgba(0, 0, 0, 0)";
-        tester.style.fontSize = "80px";
-        tester.innerHTML = "QW@HhsXJ=/()あいうえお＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝";
-        document.body.appendChild(tester);
-        var before = tester.offsetWidth;
+        var testElement = tm.dom.Element("body").create("span");
+        testElement.style
+            .set("fontFamily", "'{0}', 'monospace'".format(key))
+            .set("color", "rgba(0, 0, 0, 0)")
+            .set("fontSize", "40px");
+        testElement.text = "QW@HhsXJ=/()あいうえお＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝";
 
-        var elm = tm.dom.Element("head").create("style");
-        elm.text = "@font-face { font-family: '{0}'; src: url({1}) format('truetype'); }".format(key, path);
+        var before = testElement.element.offsetWidth;
+
+        var fontFaceStyleElement = tm.dom.Element("head").create("style");
+        fontFaceStyleElement.text = "@font-face { font-family: '{0}'; src: url({1}) format('truetype'); }".format(key, path);
 
         var font = this;
         var checkLoadFont = function() {
-            console.log(before, tester.offsetWidth);
-            if (tester.offsetWidth !== before) {
-                document.body.removeChild(tester);
+            if (testElement.element.offsetWidth !== before) {
+                testElement.remove();
                 font.flare("load");
             } else {
                 setTimeout(checkLoadFont, 100);

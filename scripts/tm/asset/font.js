@@ -16,15 +16,14 @@ tm.define("tm.asset.WebFont", {
         var fontFaceStyleElement = tm.dom.Element("head").create("style");
         fontFaceStyleElement.text = "@font-face { font-family: '{0}'; src: url({1}) format('truetype'); }".format(key, path);
 
-        var font = this;
         var checkLoadFont = function() {
             if (testElement.element.offsetWidth !== before) {
                 testElement.remove();
-                font.flare("load");
+                this.flare("load");
             } else {
                 setTimeout(checkLoadFont, 100);
             }
-        };
+        }.bind(this);
         setTimeout(checkLoadFont, 100);
     },
 });

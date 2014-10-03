@@ -1,7 +1,7 @@
 var SOURCES = [
     "scripts/_pre.js",
     "scripts/_assets.js",
-    "scripts/asset/font.js",
+    "scripts/tm/asset/font.js",
     "scripts/main.js",
 ];
 
@@ -36,18 +36,30 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-contrib-uglify");
     grunt.loadNpmTasks("grunt-contrib-watch");
     grunt.loadNpmTasks("grunt-contrib-copy");
+    grunt.loadNpmTasks("grunt-contrib-jshint");
+    grunt.loadNpmTasks('grunt-node-webkit-builder');
 
     grunt.initConfig({
         pkg: grunt.file.readJSON("package.json"),
         copy: {
             main: {
-                files: [
-                    { src: ["three.js/build/three.js"], dest: "libs/three.js" },
-                    { src: ["tmlib.js/build/tmlib.js"], dest: "libs/tmlib.js" },
-                    { src: ["bulletml.js/build/bulletml.js"], dest: "libs/bulletml.js" },
-                    { src: ["bulletml.js/build/plugins/tmlib.bulletml.js"], dest: "libs/tmlib.bulletml.js" },
-                ],
+                files: [{
+                    src: ["three.js/build/three.js"],
+                    dest: "libs/three.js"
+                }, {
+                    src: ["tmlib.js/build/tmlib.js"],
+                    dest: "libs/tmlib.js"
+                }, {
+                    src: ["bulletml.js/build/bulletml.js"],
+                    dest: "libs/bulletml.js"
+                }, {
+                    src: ["bulletml.js/build/plugins/tmlib.bulletml.js"],
+                    dest: "libs/tmlib.bulletml.js"
+                }, ],
             },
+        },
+        jshint: {
+            all: ['scripts/**/*.js'],
         },
         uglify: {
             dist: {
@@ -63,11 +75,28 @@ module.exports = function(grunt) {
         watch: {
             scripts: {
                 files: ["scripts/**/*.js"],
-                tasks: ["uglify"]
+                tasks: ["jshint", "uglify"]
             }
+        },
+        nodewebkit: {
+            main: {
+                option: {
+                    platforms: ["win", "osx"],
+                },
+                src: [
+                    "fonts/**",
+                    "images/**",
+                    "libs/**",
+                    "sounds/**",
+                    "build/glshooter3.min.js",
+                    "index.html",
+                    "package.json",
+                    "README.md",
+                ],
+            },
         },
     });
 
-    grunt.registerTask("default", ["copy", "uglify"]);
+    grunt.registerTask("default", ["copy", "jshint", "uglify"]);
 
 };

@@ -24,16 +24,6 @@ tm.define("Main", {
         this.superInit();
         this.fromJSON({
             children: {
-                bg: {
-                    type: "tm.display.RectangleShape",
-                    init: [gls3.W, gls3.H, {
-                        fillStyle: "black",
-                        strokeStyle: "transparent",
-                    }],
-                    alpha: 0.5,
-                    originX: 0,
-                    originY: 0,
-                },
                 tltleLabel: {
                     type: "tm.display.Label",
                     init: ["This is Main scene.", 36],
@@ -64,6 +54,9 @@ tm.define("Main", {
         var test = tm.hybrid.Mesh("test")
             .addChildTo(this.three)
             .on("enterframe", function(e) {
+                // this.rotationX += 0.1;
+                // this.rotationY += 0.2;
+
                 var kb = e.app.keyboard;
                 var kd = kb.getKeyDirection().mul(0.2);
                 this.x += kd.x;
@@ -75,27 +68,24 @@ tm.define("Main", {
         camera.to = new THREE.Quaternion().copy(camera.quaternion);
         camera.step = 0;
 
-        var m1 = new THREE.Matrix4();
-
         camera.on("enterframe", function(e) {
-            if (e.app.frame % 200 !== 0) {
-                THREE.Quaternion.slerp(this.from, this.to, this.quaternion, this.step);
-                return;
-            }
-
-            m1.lookAt(this.position, test.position, this.up);
-
-            this.from.copy(this.quaternion);
-            this.to.setFromRotationMatrix(m1);
-
-            this.tweener
-                .clear()
-                .set({
-                    step: 0,
-                })
-                .to({
-                    step: 1,
-                }, 3000, "easeInOutQuad");
+            THREE.Quaternion.slerp(this.from, this.to, this.quaternion, this.step);
         });
+
+        var m1 = new THREE.Matrix4();
+        camera.tweener
+            .clear()
+            .call(function() {
+                m1.lookAt(this.position, test.position, this.up);
+                this.from.copy(this.quaternion);
+                this.to.setFromRotationMatrix(m1);
+            }.bind(camera))
+            .set({
+                step: 0,
+            })
+            .to({
+                step: 1,
+            }, 1000, "easeInOutQuad")
+            .setLoop(true);
     },
 });

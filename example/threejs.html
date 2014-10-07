@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+<script src="../libs/three.js"></script>
+<script>
+window.onload = function() {
+    var that = {};
+    that.three = {
+        scene: new THREE.Scene(),
+        camera: new THREE.PerspectiveCamera(40, 300 / 400, 1, 10000),
+    };
+    that.three.camera.position.z = 1800;
+
+    var light = new THREE.DirectionalLight(0xffffff);
+    light.position.set(0, 0, 1).normalize();
+    that.three.scene.add(light);
+
+    var renderer = new THREE.WebGLRenderer({
+        antialias: true,
+    });
+    renderer.setSize(300, 400);
+    document.body.appendChild(renderer.domElement);
+
+    var animate = function() {
+        requestAnimationFrame(animate);
+        render();
+    };
+    var render = function() {
+        that.three.camera.lookAt(that.three.scene.position);
+        renderer.render(that.three.scene, that.three.camera);
+    };
+
+    var geometry = new THREE.BoxGeometry(500, 500, 50);
+    var material = new THREE.MeshPhongMaterial({color: "#dd3b6f"});
+    var c = new THREE.Mesh(geometry, material);
+    c.position.set(0, 0, 0);
+    that.three.scene.add(c);
+
+    animate();
+};
+</script>
+</body>
+</html>

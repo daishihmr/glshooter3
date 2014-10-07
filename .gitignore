@@ -1,3 +1,5 @@
-build
 node_modules
 cache/
+
+build/glshooter3/win
+build/glshooter3/osx

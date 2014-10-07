@@ -2,6 +2,12 @@ var SOURCES = [
     "scripts/_pre.js",
     "scripts/_assets.js",
     "scripts/tm/asset/font.js",
+    "scripts/tm/asset/threejson.js",
+    "scripts/tm/hybrid/hybridapp.js",
+    "scripts/tm/hybrid/hybridscene.js",
+    "scripts/tm/hybrid/threeelement.js",
+    "scripts/tm/hybrid/mesh.js",
+    "scripts/tm/hybrid/camera.js",
     "scripts/main.js",
 ];
 

@@ -20,6 +20,7 @@ tm.define("tm.asset.WebFont", {
             if (testElement.element.offsetWidth !== before) {
                 testElement.remove();
                 this.flare("load");
+                console.debug("webfont loaded", path, key);
             } else {
                 setTimeout(checkLoadFont, 100);
             }

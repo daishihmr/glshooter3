@@ -3,11 +3,40 @@ tm.define("tm.hybrid.HybridScene", {
 
     init: function() {
         this.superInit();
+        this.two = this;
         this.three = tm.hybrid.HybridScene.Three();
+
+        this.on("enter", function(e) {
+            this.camera.aspect = e.app.width / e.app.height;
+        });
     },
 
     render: function(renderer) {
         renderer.render(this.three.scene, this.three.camera.threeObject);
+    },
+});
+tm.hybrid.HybridScene.prototype.accessor("camera", {
+    get: function() {
+        return this.three.camera;
+    },
+    set: function(v) {
+        this.three.camera = v;
+    },
+});
+tm.hybrid.HybridScene.prototype.accessor("ambientLight", {
+    get: function() {
+        return this.three.ambientLight;
+    },
+    set: function(v) {
+        this.three.ambientLight = v;
+    },
+});
+tm.hybrid.HybridScene.prototype.accessor("directionalLight", {
+    get: function() {
+        return this.three.directionalLight;
+    },
+    set: function(v) {
+        this.three.directionalLight = v;
     },
 });
 
@@ -32,3 +61,27 @@ tm.define("tm.hybrid.HybridScene.Three", {
     },
 });
 
+tm.hybrid.HybridScene.prototype.accessor("fog", {
+    get: function() {
+        return this.three.scene.fog;
+    },
+    set: function(v) {
+        this.three.scene.fog = v;
+    },
+});
+tm.hybrid.HybridScene.prototype.accessor("overrideMaterial", {
+    get: function() {
+        return this.three.scene.overrideMaterial;
+    },
+    set: function(v) {
+        this.three.scene.overrideMaterial = v;
+    },
+});
+tm.hybrid.HybridScene.prototype.accessor("autoUpdate", {
+    get: function() {
+        return this.three.scene.autoUpdate;
+    },
+    set: function(v) {
+        this.three.scene.autoUpdate = v;
+    },
+});

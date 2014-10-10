@@ -10,10 +10,14 @@ tm.define("tm.asset.ThreeJSON", {
         }
 
         tm.asset.ThreeJSON.loader.load(path, function(geometry, materials) {
-            console.log(materials[0]);
-            this.mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
+            this.load(geometry, materials);
             this.flare("load");
         }.bind(this));
+    },
+
+    load: function(geometry, materials) {
+        materials[0].shading = THREE.FlatShading;
+        this.mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
     },
 });
 tm.asset.ThreeJSON.loader = null;

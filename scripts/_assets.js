@@ -4,7 +4,7 @@ gls3.assets = {
     "numberFont": "fonts/UbuntuMono/UbuntuMono-Bold.ttf",
 
     "test": {
-        url: "example/test.js",
+        url: "images/building.js",
         type: "three",
     },
 };

@@ -16,3 +16,12 @@ tm.define("tm.hybrid.Mesh", {
         }
     },
 });
+
+tm.hybrid.Mesh.prototype.getMorphTargetIndexByName = function(name) {
+    this.threeObject.getMorphTargetIndexByName(name);
+    return this;
+};
+tm.hybrid.Mesh.prototype.updateMorphTargets = function() {
+    this.threeObject.updateMorphTargets();
+    return this;
+};

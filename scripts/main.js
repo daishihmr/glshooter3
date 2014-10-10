@@ -54,8 +54,8 @@ tm.define("Main", {
         var test = tm.hybrid.Mesh("test")
             .addChildTo(this.three)
             .on("enterframe", function(e) {
-                // this.rotationX += 0.1;
-                // this.rotationY += 0.2;
+                this.rotationX += 0.01;
+                this.rotationY += 0.02;
 
                 var kb = e.app.keyboard;
                 var kd = kb.getKeyDirection().mul(0.2);

@@ -6,8 +6,9 @@ var SOURCES = [
     "scripts/tm/hybrid/hybridapp.js",
     "scripts/tm/hybrid/hybridscene.js",
     "scripts/tm/hybrid/threeelement.js",
-    "scripts/tm/hybrid/mesh.js",
     "scripts/tm/hybrid/camera.js",
+    "scripts/tm/hybrid/mesh.js",
+    "scripts/tm/hybrid/sprite.js",
     "scripts/main.js",
 ];
 
@@ -44,6 +45,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-contrib-copy");
     grunt.loadNpmTasks("grunt-contrib-jshint");
     grunt.loadNpmTasks('grunt-node-webkit-builder');
+    grunt.loadNpmTasks('grunt-koko');
 
     grunt.initConfig({
         pkg: grunt.file.readJSON("package.json"),
@@ -95,14 +97,22 @@ module.exports = function(grunt) {
                     "libs/**",
                     "sounds/**",
                     "build/glshooter3.min.js",
+                    "build/glshooter3.min.js.map",
                     "index.html",
                     "package.json",
                     "README.md",
                 ],
             },
         },
+        koko: {
+            main: {
+                openPath: "/index.html",
+                staticPort: "54345",
+            },
+        },
     });
 
-    grunt.registerTask("default", ["copy", "jshint", "uglify"]);
+    grunt.registerTask("web", ["copy", "jshint", "uglify", "koko"]);
+    grunt.registerTask("default", ["copy", "jshint", "uglify", "nodewebkit"]);
 
 };

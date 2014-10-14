@@ -1,8 +1,14 @@
 tm.main(function() {
     gls3.app = tm.hybrid.HybridApp();
+
+    var twoCanvas = tm.dom.Element(gls3.app.element);
+    var threeCanvas = tm.dom.Element(gls3.app.threeCanvas);
+
+    threeCanvas.style.set("backgroundColor", "black");
+
     tm.dom.Element("body")
-        .prepend(tm.dom.Element(gls3.app.element))
-        .prepend(tm.dom.Element(gls3.app.threeCanvas));
+        .prepend(twoCanvas)
+        .prepend(threeCanvas);
 
     gls3.app.fps = 60;
     gls3.app.resize(gls3.W, gls3.H).fitWindow();

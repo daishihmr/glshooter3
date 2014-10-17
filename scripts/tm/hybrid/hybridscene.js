@@ -6,6 +6,8 @@ tm.define("tm.hybrid.HybridScene", {
         this.two = this;
         this.three = tm.hybrid.HybridScene.Three();
 
+        this.effectComposer = null;
+
         this.on("enter", function(e) {
             this.camera.aspect = e.app.width / e.app.height;
         });
@@ -44,9 +46,10 @@ tm.define("tm.hybrid.HybridScene.Three", {
     superClass: "tm.hybrid.ThreeElement",
 
     init: function() {
-        this.superInit();
+        this.superInit(new THREE.Scene());
 
-        this.scene = new THREE.Scene();
+        this.scene = this.threeObject;
+
         this.camera = tm.hybrid.Camera();
         this.camera.z = 7;
 
@@ -56,8 +59,6 @@ tm.define("tm.hybrid.HybridScene.Three", {
         this.directionalLight = new THREE.DirectionalLight(0xffffff);
         this.directionalLight.position.set(1, 1, 1).normalize();
         this.scene.add(this.directionalLight);
-
-        this.threeObject = this.scene;
     },
 });
 

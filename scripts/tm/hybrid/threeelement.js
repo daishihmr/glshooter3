@@ -5,7 +5,7 @@ tm.define("tm.hybrid.ThreeElement", {
         this.superInit();
 
         /** @type {THREE.Object3D} */
-        this.threeObject = threeObject || null;
+        this.threeObject = threeObject || new THREE.Object3D();
     },
 
     /** @override */
@@ -15,7 +15,6 @@ tm.define("tm.hybrid.ThreeElement", {
         this.children.push(child);
 
         if (child instanceof tm.hybrid.ThreeElement) {
-            console.log("add", child.threeObject instanceof THREE.Sprite);
             this.threeObject.add(child.threeObject);
         }
 
@@ -38,6 +37,20 @@ tm.define("tm.hybrid.ThreeElement", {
             var e = tm.event.Event("removed");
             child.dispatchEvent(e);
         }
+    },
+
+    setPosition: function(x, y, z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        return this;
+    },
+
+    setRotation: function(x, y, z) {
+        this.rotationX = x;
+        this.rotationY = y;
+        this.rotationZ = z;
+        return this;
     },
 });
 tm.hybrid.ThreeElement.prototype.accessor("id", {
@@ -146,26 +159,26 @@ tm.hybrid.ThreeElement.prototype.accessor("eulerOrder", {
 });
 tm.hybrid.ThreeElement.prototype.accessor("rotationX", {
     get: function() {
-        return this.threeObject.rotation.x;
+        return this.threeObject.rotation.x * Math.RAD_TO_DEG;
     },
     set: function(v) {
-        this.threeObject.rotation.x = v;
+        this.threeObject.rotation.x = v * Math.DEG_TO_RAD;
     }
 });
 tm.hybrid.ThreeElement.prototype.accessor("rotationY", {
     get: function() {
-        return this.threeObject.rotation.y;
+        return this.threeObject.rotation.y * Math.RAD_TO_DEG;
     },
     set: function(v) {
-        this.threeObject.rotation.y = v;
+        this.threeObject.rotation.y = v * Math.DEG_TO_RAD;
     }
 });
 tm.hybrid.ThreeElement.prototype.accessor("rotationZ", {
     get: function() {
-        return this.threeObject.rotation.z;
+        return this.threeObject.rotation.z * Math.RAD_TO_DEG;
     },
     set: function(v) {
-        this.threeObject.rotation.z = v;
+        this.threeObject.rotation.z = v * Math.DEG_TO_RAD;
     }
 });
 tm.hybrid.ThreeElement.prototype.accessor("up", {

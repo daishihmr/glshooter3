@@ -1,5 +1,11 @@
 tm.main(function() {
+    tm.dom.Element("body").style.set("backgroundColor", "hsl(240, 40%, 10%)");
+
     gls3.app = tm.hybrid.HybridApp();
+
+    tm.util.Script.loadStats().on("load", function() {
+        gls3.app.enableStats();
+    });
 
     var twoCanvas = tm.dom.Element(gls3.app.element);
     var threeCanvas = tm.dom.Element(gls3.app.threeCanvas);
@@ -24,15 +30,17 @@ tm.main(function() {
 });
 
 tm.define("Main", {
-    superClass: "tm.hybrid.HybridScene",
+    superClass: "gls3.GameScene",
 
     init: function() {
+        var scene = this;
         this.superInit();
         this.fromJSON({
             children: {
                 tltleLabel: {
                     type: "tm.display.Label",
                     init: ["This is Main scene.", 36],
+                    fillStyle: "hsl(20, 80%, 60%)",
                     x: gls3.W * 0.5,
                     y: gls3.H * 0.25,
                     fontFamily: "titleFont",
@@ -40,6 +48,7 @@ tm.define("Main", {
                 uiLabel: {
                     type: "tm.display.Label",
                     init: ["This is Main scene.", 36],
+                    fillStyle: "hsl(20, 80%, 60%)",
                     x: gls3.W * 0.5,
                     y: gls3.H * 0.5,
                     fontFamily: "uiFont",
@@ -47,6 +56,7 @@ tm.define("Main", {
                 numberLabel: {
                     type: "tm.display.Label",
                     init: ["1234567890", 36],
+                    fillStyle: "hsl(20, 80%, 60%)",
                     x: gls3.W * 0.5,
                     y: gls3.H * 0.75,
                     fontFamily: "numberFont",
@@ -54,11 +64,11 @@ tm.define("Main", {
             },
         });
 
-        // アセットで読み込んだJSONを使ってtm.display.Spriteっぽくメッシュを生成
-        var test = tm.hybrid.Mesh("test")
-            .addChildTo(this.three)
+        var test = tm.hybrid.ThreeElement()
+            .addChildTo(scene.three)
+            .setRotation(0, 0, 20)
             .on("enterframe", function(e) {
-                this.rotationY += 0.02;
+                this.rotationY += 0.2;
 
                 var kb = e.app.keyboard;
                 var kd = kb.getKeyDirection().mul(0.2);
@@ -66,8 +76,17 @@ tm.define("Main", {
                 this.y -= kd.y;
             });
 
+        (20).times(function(z) {
+            (10).times(function(x) {
+                // アセットで読み込んだJSONを使ってtm.display.Spriteっぽくメッシュを生成
+                tm.hybrid.Mesh("building")
+                    .setPosition((x - 5) * 4, 0, (z - 10) * -4)
+                    .addChildTo(test);
+            });
+        });
+
         var camera = this.camera;
-        // camera.aspect = gls3.W / gls3.H;
+        camera.y = 5;
         camera.z = 50;
         camera.from = new THREE.Quaternion().copy(camera.quaternion);
         camera.to = new THREE.Quaternion().copy(camera.quaternion);
@@ -97,8 +116,6 @@ tm.define("Main", {
             }
         };
 
-        var scene = this;
-
         THREE.ImageUtils.loadTexture("./images/fighters.png", null, function(texture) {
             texture.offset.x = 0.0;
             texture.offset.y = 1.0 - 1 / 5;
@@ -121,7 +138,7 @@ tm.define("Main", {
                     //     }
                     // }
                 })
-                .addChildTo(test);
+                .addChildTo(scene.three);
         });
 
         var spline = new THREE.SplineCurve3([
@@ -147,6 +164,6 @@ tm.define("Main", {
             .on("enterframe", function() {
                 this.rotationY += 0.02;
             })
-            .addChildTo(this.three);
+            .addChildTo(scene.three);
     },
 });

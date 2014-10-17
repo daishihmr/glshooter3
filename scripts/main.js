@@ -79,9 +79,14 @@ tm.define("Main", {
         (20).times(function(z) {
             (10).times(function(x) {
                 // アセットで読み込んだJSONを使ってtm.display.Spriteっぽくメッシュを生成
-                tm.hybrid.Mesh("building")
+                var b = tm.hybrid.Mesh("building")
                     .setPosition((x - 5) * 4, 0, (z - 10) * -4)
                     .addChildTo(test);
+
+                b.threeObject.material.materials.each(function(m) {
+                    m.transparent = true;
+                    m.opacity = [0.5, 1.0].pickup();
+                });
             });
         });
 

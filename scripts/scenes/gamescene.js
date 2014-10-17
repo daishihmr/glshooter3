@@ -19,13 +19,13 @@ tm.define("gls3.GameScene", {
             var effect = new THREE.ShaderPass(THREE.CopyShader);
             composer.addPass(effect);
 
-            effect = new THREE.ShaderPass(THREE.VerticalBlurShader);
-            effect.uniforms.v.value *= 2;
-            composer.addPass(effect);
+            // effect = new THREE.ShaderPass(THREE.VerticalBlurShader);
+            // effect.uniforms.v.value *= 2;
+            // composer.addPass(effect);
 
-            effect = new THREE.ShaderPass(THREE.RGBShiftShader);
-            effect.uniforms.amount.value *= 5;
-            composer.addPass(effect);
+            // effect = new THREE.ShaderPass(THREE.RGBShiftShader);
+            // effect.uniforms.amount.value *= 5;
+            // composer.addPass(effect);
 
             effect.renderToScreen = true;
         });

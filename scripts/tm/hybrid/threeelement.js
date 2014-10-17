@@ -52,6 +52,30 @@ tm.define("tm.hybrid.ThreeElement", {
         this.rotationZ = z;
         return this;
     },
+
+    setScale: function(x, y, z) {
+        if (arguments.length === 1) {
+            y = x;
+            z = x;
+        }
+        this.scaleX = x;
+        this.sclaeY = y;
+        this.scaleZ = z;
+        return this;
+    },
+
+    show: function() {
+        this.visible = true;
+        return this;
+    },
+    hide: function() {
+        this.visible = false;
+        return this;
+    },
+    setVisible: function(visible) {
+        this.visible = visible;
+        return this;
+    },
 });
 tm.hybrid.ThreeElement.prototype.accessor("id", {
     get: function() {

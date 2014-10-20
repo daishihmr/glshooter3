@@ -7,4 +7,9 @@ gls3.assets = {
         url: "images/building.js",
         type: "three",
     },
+
+    "bg": {
+        url: "images/dummybg.js",
+        type: "three",
+    },
 };

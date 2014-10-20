@@ -39,6 +39,19 @@ tm.define("tm.hybrid.ThreeElement", {
         }
     },
 
+    setX: function(x) {
+        this.x = x;
+        return this;
+    },
+    setY: function(y) {
+        this.y = y;
+        return this;
+    },
+    setZ: function(z) {
+        this.z = z;
+        return this;
+    },
+
     setPosition: function(x, y, z) {
         this.x = x;
         this.y = y;

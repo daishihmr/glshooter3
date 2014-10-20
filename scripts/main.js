@@ -64,31 +64,13 @@ tm.define("Main", {
             },
         });
 
-        var test = tm.hybrid.ThreeElement()
+        tm.hybrid.Mesh("bg")
+            .setZ(-50)
+            .setScale(50)
             .addChildTo(scene.three)
-            .setRotation(0, 0, 20)
-            .on("enterframe", function(e) {
-                this.rotationY += 0.2;
-
-                var kb = e.app.keyboard;
-                var kd = kb.getKeyDirection().mul(0.2);
-                this.x += kd.x;
-                this.y -= kd.y;
+            .on("enterframe", function() {
+                this.z += 0.01;
             });
-
-        (20).times(function(z) {
-            (10).times(function(x) {
-                // アセットで読み込んだJSONを使ってtm.display.Spriteっぽくメッシュを生成
-                var b = tm.hybrid.Mesh("building")
-                    .setPosition((x - 5) * 4, 0, (z - 10) * -4)
-                    .addChildTo(test);
-
-                b.threeObject.material.materials.each(function(m) {
-                    m.transparent = true;
-                    m.opacity = [0.5, 1.0].pickup();
-                });
-            });
-        });
 
         var camera = this.camera;
         camera.y = 5;
@@ -102,24 +84,6 @@ tm.define("Main", {
         });
 
         var matrix = new THREE.Matrix4();
-
-        this.update = function(app) {
-            if (app.keyboard.getKeyUp("up") || app.keyboard.getKeyUp("down") || app.keyboard.getKeyUp("left") || app.keyboard.getKeyUp("right")) {
-                camera.tweener
-                    .clear()
-                    .call(function() {
-                        matrix.lookAt(camera.position, test.position, camera.up);
-                        camera.from.copy(camera.quaternion);
-                        camera.to.setFromRotationMatrix(matrix);
-                    })
-                    .set({
-                        step: 0,
-                    })
-                    .to({
-                        step: 1,
-                    }, 1000, "easeInOutQuad");
-            }
-        };
 
         THREE.ImageUtils.loadTexture("./images/fighters.png", null, function(texture) {
             texture.offset.x = 0.0;

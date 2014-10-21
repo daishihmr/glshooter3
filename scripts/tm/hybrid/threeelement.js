@@ -72,7 +72,7 @@ tm.define("tm.hybrid.ThreeElement", {
             z = x;
         }
         this.scaleX = x;
-        this.sclaeY = y;
+        this.scaleY = y;
         this.scaleZ = z;
         return this;
     },
@@ -358,8 +358,10 @@ tm.hybrid.ThreeElement.prototype.getObjectById = function(id, recursive) {
     return this.threeObject.getObjectById(id, recursive);
 };
 tm.hybrid.ThreeElement.prototype.translateOnAxis = function(axis, distance) {
-    return this.threeObject.translateOnAxis(axis, distance);
+    this.threeObject.translateOnAxis(axis, distance);
+    return this;
 };
 tm.hybrid.ThreeElement.prototype.rotateOnAxis = function(axis, angle) {
-    return this.threeObject.rotateOnAxis(axis, angle);
+    this.threeObject.rotateOnAxis(axis, angle);
+    return this;
 };

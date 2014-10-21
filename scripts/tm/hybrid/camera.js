@@ -2,7 +2,7 @@ tm.define("tm.hybrid.Camera", {
     superClass: "tm.hybrid.ThreeElement",
 
     init: function() {
-        this.superInit(new THREE.PerspectiveCamera(40, 1, 1, 10000));
+        this.superInit(new THREE.PerspectiveCamera(45, 1, 1, 10000));
     },
 });
 tm.hybrid.Camera.prototype.accessor("matrixWorldInverse", {

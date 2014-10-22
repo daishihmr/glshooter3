@@ -65,6 +65,18 @@ tm.define("tm.hybrid.ThreeElement", {
         this.rotationZ = z;
         return this;
     },
+    setRotationX: function(x) {
+        this.rotationX = x;
+        return this;
+    },
+    setRotationY: function(y) {
+        this.rotationY = y;
+        return this;
+    },
+    setRotationZ: function(z) {
+        this.rotationZ = z;
+        return this;
+    },
 
     setScale: function(x, y, z) {
         if (arguments.length === 1) {

@@ -9,7 +9,7 @@ gls3.assets = {
     },
 
     "bg": {
-        url: "images/dummybg.js",
+        url: "images/random.js",
         type: "three",
     },
 };

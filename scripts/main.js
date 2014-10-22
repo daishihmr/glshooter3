@@ -36,48 +36,46 @@ tm.define("Main", {
         var scene = this;
         this.superInit();
         this.fromJSON({
-            children: {
-                tltleLabel: {
-                    type: "tm.display.Label",
-                    init: ["This is Main scene.", 36],
-                    fillStyle: "hsl(20, 80%, 60%)",
-                    x: gls3.W * 0.5,
-                    y: gls3.H * 0.25,
-                    fontFamily: "titleFont",
-                },
-                uiLabel: {
-                    type: "tm.display.Label",
-                    init: ["This is Main scene.", 36],
-                    fillStyle: "hsl(20, 80%, 60%)",
-                    x: gls3.W * 0.5,
-                    y: gls3.H * 0.5,
-                    fontFamily: "uiFont",
-                },
-                numberLabel: {
-                    type: "tm.display.Label",
-                    init: ["1234567890", 36],
-                    fillStyle: "hsl(20, 80%, 60%)",
-                    x: gls3.W * 0.5,
-                    y: gls3.H * 0.75,
-                    fontFamily: "numberFont",
-                },
-            },
+            children: {},
         });
 
-
         var bg = tm.hybrid.Mesh("bg")
-            .setScale(5)
             .addChildTo(scene.three);
+        bg.setScale(80);
+        bg.receiveShadow = true;
 
-        var viewport = tm.hybrid.ThreeElement()
-            .rotateOnAxis(new THREE.Vector3(1, 0, 0), -45 * Math.DEG_TO_RAD)
+        var gameBoard = tm.hybrid.ThreeElement()
+            .setY(100)
             .on("enterframe", function() {
-                this.z -= 0.01;
+                this.z -= 1;
             })
             .addChildTo(scene.three);
+
         var camera = this.camera;
-        camera.z = 50;
-        camera.addChildTo(viewport);
+        camera.setPosition(0, 2500, 1);
+        camera.lookAt(gameBoard);
+        camera.addChildTo(gameBoard);
+
+        var fighter = tm.hybrid.Mesh(new THREE.Mesh(new THREE.BoxGeometry(200, 200, 200), new THREE.MeshLambertMaterial({
+                color: 0x101080,
+                ambient: 0x010101,
+            })))
+            .on("enterframe", function(e) {
+                this.rotationZ += 2;
+                var dir = e.app.keyboard.getKeyDirection().mul(20);
+                this.x += dir.x;
+                this.z += dir.y;
+            })
+            .addChildTo(gameBoard);
+        fighter.castShadow = true;
+
+        tm.hybrid.ThreeElement(new THREE.AmbientLight(0xffffff, 0.5))
+            .addChildTo(gameBoard);
+
+        var light = tm.hybrid.ThreeElement(new THREE.DirectionalLight(0xffffff, 2.0))
+            .setPosition(0, 2500, 1)
+            .addChildTo(gameBoard);
+        light.castShadow = true;
 
         // THREE.ImageUtils.loadTexture("./images/fighters.png", null, function(texture) {
         //     texture.offset.x = 0.0;

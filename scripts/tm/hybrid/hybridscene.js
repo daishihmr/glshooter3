@@ -52,13 +52,6 @@ tm.define("tm.hybrid.HybridScene.Three", {
 
         this.camera = tm.hybrid.Camera();
         this.camera.z = 7;
-
-        this.ambientLight = new THREE.AmbientLight(0xffffff);
-        this.scene.add(this.ambientLight);
-
-        this.directionalLight = new THREE.DirectionalLight(0xffffff);
-        this.directionalLight.position.set(1, 1, 1).normalize();
-        this.scene.add(this.directionalLight);
     },
 });
 

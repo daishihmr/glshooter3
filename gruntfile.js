@@ -7,6 +7,7 @@ var SOURCES = [
     "scripts/tm/hybrid/hybridscene.js",
     "scripts/tm/hybrid/threeelement.js",
     "scripts/tm/hybrid/camera.js",
+    "scripts/tm/hybrid/directionallight.js",
     "scripts/tm/hybrid/mesh.js",
     "scripts/tm/hybrid/sprite.js",
     "scripts/scenes/gamescene.js",

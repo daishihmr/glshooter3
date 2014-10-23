@@ -40,26 +40,31 @@ tm.define("Main", {
         });
 
         var bg = tm.hybrid.Mesh("bg")
+            .on("enterframe", function() {
+                this.z += 1;
+            })
+            .setX(100)
+            .setScale(80)
+            .setReceiveShadow(true)
             .addChildTo(scene.three);
-        bg.setScale(80);
-        bg.receiveShadow = true;
 
         var gameBoard = tm.hybrid.ThreeElement()
-            .setY(100)
+            .setY(200)
             .on("enterframe", function() {
-                this.z -= 1;
+                // this.z -= 1;
             })
             .addChildTo(scene.three);
 
-        var camera = this.camera;
-        camera.setPosition(0, 2500, 1);
-        camera.lookAt(gameBoard);
-        camera.addChildTo(gameBoard);
+        this.camera
+            .setPosition(0, 2500, 1)
+            .lookAt(gameBoard)
+            .addChildTo(gameBoard);
 
         var fighter = tm.hybrid.Mesh(new THREE.Mesh(new THREE.BoxGeometry(200, 200, 200), new THREE.MeshLambertMaterial({
                 color: 0x101080,
                 ambient: 0x010101,
             })))
+            .setCastShadow(true)
             .on("enterframe", function(e) {
                 this.rotationZ += 2;
                 var dir = e.app.keyboard.getKeyDirection().mul(20);
@@ -67,15 +72,14 @@ tm.define("Main", {
                 this.z += dir.y;
             })
             .addChildTo(gameBoard);
-        fighter.castShadow = true;
 
         tm.hybrid.ThreeElement(new THREE.AmbientLight(0xffffff, 0.5))
             .addChildTo(gameBoard);
 
-        var light = tm.hybrid.ThreeElement(new THREE.DirectionalLight(0xffffff, 2.0))
-            .setPosition(0, 2500, 1)
-            .addChildTo(gameBoard);
-        light.castShadow = true;
+        var light = tm.hybrid.DirectionalLight(0xffffff, 2.0)
+            .setCastShadow(true)
+            .setPosition(1, 1, 1)
+            .addChildTo(scene.three);
 
         // THREE.ImageUtils.loadTexture("./images/fighters.png", null, function(texture) {
         //     texture.offset.x = 0.0;

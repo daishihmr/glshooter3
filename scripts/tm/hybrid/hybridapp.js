@@ -11,6 +11,7 @@ tm.define("tm.hybrid.HybridApp", {
         this.threeRenderer = new THREE.WebGLRenderer({
             antialias: true,
         });
+        this.threeRenderer.shadowMapEnabled = true;
 
         if (this.element.parentNode) {
             this.element.parentNode.appendChild(this.threeRenderer.domElement);

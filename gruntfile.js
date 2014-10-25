@@ -7,8 +7,10 @@ var SOURCES = [
     "scripts/tm/hybrid/hybridscene.js",
     "scripts/tm/hybrid/threeelement.js",
     "scripts/tm/hybrid/camera.js",
+    "scripts/tm/hybrid/directionallight.js",
     "scripts/tm/hybrid/mesh.js",
     "scripts/tm/hybrid/sprite.js",
+    "scripts/scenes/gamescene.js",
     "scripts/main.js",
 ];
 
@@ -54,6 +56,16 @@ module.exports = function(grunt) {
                 files: [{
                     src: ["three.js/build/three.js"],
                     dest: "libs/three.js"
+                }, {
+                    src: ["**"],
+                    cwd: "three.js/examples/js/postprocessing/",
+                    dest: "libs/postprocessing/",
+                    expand: true,
+                }, {
+                    src: ["**"],
+                    cwd: "three.js/examples/js/shaders/",
+                    dest: "libs/shaders/",
+                    expand: true,
                 }, {
                     src: ["tmlib.js/build/tmlib.js"],
                     dest: "libs/tmlib.js"

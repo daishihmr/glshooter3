@@ -5,7 +5,7 @@ tm.define("tm.hybrid.ThreeElement", {
         this.superInit();
 
         /** @type {THREE.Object3D} */
-        this.threeObject = threeObject || null;
+        this.threeObject = threeObject || new THREE.Object3D();
     },
 
     /** @override */
@@ -15,7 +15,6 @@ tm.define("tm.hybrid.ThreeElement", {
         this.children.push(child);
 
         if (child instanceof tm.hybrid.ThreeElement) {
-            console.log("add", child.threeObject instanceof THREE.Sprite);
             this.threeObject.add(child.threeObject);
         }
 
@@ -39,7 +38,67 @@ tm.define("tm.hybrid.ThreeElement", {
             child.dispatchEvent(e);
         }
     },
+
+    setX: function(x) {
+        this.x = x;
+        return this;
+    },
+    setY: function(y) {
+        this.y = y;
+        return this;
+    },
+    setZ: function(z) {
+        this.z = z;
+        return this;
+    },
+
+    setPosition: function(x, y, z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        return this;
+    },
+
+    setRotation: function(x, y, z) {
+        this.rotationX = x;
+        this.rotationY = y;
+        this.rotationZ = z;
+        return this;
+    },
+    setRotationX: function(x) {
+        this.rotationX = x;
+        return this;
+    },
+    setRotationY: function(y) {
+        this.rotationY = y;
+        return this;
+    },
+    setRotationZ: function(z) {
+        this.rotationZ = z;
+        return this;
+    },
+
+    setScale: function(x, y, z) {
+        if (arguments.length === 1) {
+            y = x;
+            z = x;
+        }
+        this.scaleX = x;
+        this.scaleY = y;
+        this.scaleZ = z;
+        return this;
+    },
+
+    show: function() {
+        this.visible = true;
+        return this;
+    },
+    hide: function() {
+        this.visible = false;
+        return this;
+    },
 });
+
 tm.hybrid.ThreeElement.prototype.accessor("id", {
     get: function() {
         return this.threeObject.id;
@@ -48,6 +107,7 @@ tm.hybrid.ThreeElement.prototype.accessor("id", {
         this.threeObject.id = v;
     }
 });
+
 tm.hybrid.ThreeElement.prototype.accessor("uuid", {
     get: function() {
         return this.threeObject.uuid;
@@ -56,6 +116,7 @@ tm.hybrid.ThreeElement.prototype.accessor("uuid", {
         this.threeObject.uuid = v;
     }
 });
+
 tm.hybrid.ThreeElement.prototype.accessor("name", {
     get: function() {
         return this.threeObject.name;
@@ -64,6 +125,7 @@ tm.hybrid.ThreeElement.prototype.accessor("name", {
         this.threeObject.name = v;
     }
 });
+
 tm.hybrid.ThreeElement.prototype.accessor("position", {
     get: function() {
         return this.threeObject.position;
@@ -72,6 +134,7 @@ tm.hybrid.ThreeElement.prototype.accessor("position", {
         this.threeObject.position = v;
     }
 });
+
 tm.hybrid.ThreeElement.prototype.accessor("x", {
     get: function() {
         return this.threeObject.position.x;
@@ -80,6 +143,7 @@ tm.hybrid.ThreeElement.prototype.accessor("x", {
         this.threeObject.position.x = v;
     }
 });
+
 tm.hybrid.ThreeElement.prototype.accessor("y", {
     get: function() {
         return this.threeObject.position.y;
@@ -88,6 +152,7 @@ tm.hybrid.ThreeElement.prototype.accessor("y", {
         this.threeObject.position.y = v;
     }
 });
+
 tm.hybrid.ThreeElement.prototype.accessor("z", {
     get: function() {
         return this.threeObject.position.z;
@@ -96,6 +161,7 @@ tm.hybrid.ThreeElement.prototype.accessor("z", {
         this.threeObject.position.z = v;
     }
 });
+
 tm.hybrid.ThreeElement.prototype.accessor("scale", {
     get: function() {
         return this.threeObject.scale;
@@ -104,6 +170,7 @@ tm.hybrid.ThreeElement.prototype.accessor("scale", {
         this.threeObject.scale = v;
     }
 });
+
 tm.hybrid.ThreeElement.prototype.accessor("scaleX", {
     get: function() {
         return this.threeObject.scale.x;
@@ -112,6 +179,7 @@ tm.hybrid.ThreeElement.prototype.accessor("scaleX", {
         this.threeObject.scale.x = v;
     }
 });
+
 tm.hybrid.ThreeElement.prototype.accessor("scaleY", {
     get: function() {
         return this.threeObject.scale.y;
@@ -120,6 +188,7 @@ tm.hybrid.ThreeElement.prototype.accessor("scaleY", {
         this.threeObject.scale.y = v;
     }
 });
+
 tm.hybrid.ThreeElement.prototype.accessor("scaleZ", {
     get: function() {
         return this.threeObject.scale.z;
@@ -128,6 +197,7 @@ tm.hybrid.ThreeElement.prototype.accessor("scaleZ", {
         this.threeObject.scale.z = v;
     }
 });
+
 tm.hybrid.ThreeElement.prototype.accessor("rotation", {
     get: function() {
         return this.threeObject.rotation;
@@ -136,6 +206,7 @@ tm.hybrid.ThreeElement.prototype.accessor("rotation", {
         this.threeObject.rotation = v;
     }
 });
+
 tm.hybrid.ThreeElement.prototype.accessor("eulerOrder", {
     get: function() {
         return this.threeObject.eulerOrder;
@@ -144,30 +215,34 @@ tm.hybrid.ThreeElement.prototype.accessor("eulerOrder", {
         this.threeObject.eulerOrder = v;
     }
 });
+
 tm.hybrid.ThreeElement.prototype.accessor("rotationX", {
     get: function() {
-        return this.threeObject.rotation.x;
+        return this.threeObject.rotation.x * Math.RAD_TO_DEG;
     },
     set: function(v) {
-        this.threeObject.rotation.x = v;
+        this.threeObject.rotation.x = v * Math.DEG_TO_RAD;
     }
 });
+
 tm.hybrid.ThreeElement.prototype.accessor("rotationY", {
     get: function() {
-        return this.threeObject.rotation.y;
+        return this.threeObject.rotation.y * Math.RAD_TO_DEG;
     },
     set: function(v) {
-        this.threeObject.rotation.y = v;
+        this.threeObject.rotation.y = v * Math.DEG_TO_RAD;
     }
 });
+
 tm.hybrid.ThreeElement.prototype.accessor("rotationZ", {
     get: function() {
-        return this.threeObject.rotation.z;
+        return this.threeObject.rotation.z * Math.RAD_TO_DEG;
     },
     set: function(v) {
-        this.threeObject.rotation.z = v;
+        this.threeObject.rotation.z = v * Math.DEG_TO_RAD;
     }
 });
+
 tm.hybrid.ThreeElement.prototype.accessor("up", {
     get: function() {
         return this.threeObject.up;
@@ -176,6 +251,7 @@ tm.hybrid.ThreeElement.prototype.accessor("up", {
         this.threeObject.up = v;
     }
 });
+
 tm.hybrid.ThreeElement.prototype.accessor("useQuaternion", {
     get: function() {
         return this.threeObject.useQuaternion;
@@ -184,6 +260,7 @@ tm.hybrid.ThreeElement.prototype.accessor("useQuaternion", {
         this.threeObject.useQuaternion = v;
     }
 });
+
 tm.hybrid.ThreeElement.prototype.accessor("quaternion", {
     get: function() {
         return this.threeObject.quaternion;
@@ -192,6 +269,7 @@ tm.hybrid.ThreeElement.prototype.accessor("quaternion", {
         this.threeObject.quaternion = v;
     }
 });
+
 tm.hybrid.ThreeElement.prototype.accessor("visible", {
     get: function() {
         return this.threeObject.visible;
@@ -200,6 +278,12 @@ tm.hybrid.ThreeElement.prototype.accessor("visible", {
         this.threeObject.visible = v;
     }
 });
+tm.hybrid.ThreeElement.defineInstanceMethod("setVisible", function(v) {
+    this.visible = v;
+    return this;
+});
+
+
 tm.hybrid.ThreeElement.prototype.accessor("castShadow", {
     get: function() {
         return this.threeObject.castShadow;
@@ -208,6 +292,11 @@ tm.hybrid.ThreeElement.prototype.accessor("castShadow", {
         this.threeObject.castShadow = v;
     }
 });
+tm.hybrid.ThreeElement.defineInstanceMethod("setCastShadow", function(v) {
+    this.castShadow = v;
+    return this;
+});
+
 tm.hybrid.ThreeElement.prototype.accessor("receiveShadow", {
     get: function() {
         return this.threeObject.receiveShadow;
@@ -216,6 +305,11 @@ tm.hybrid.ThreeElement.prototype.accessor("receiveShadow", {
         this.threeObject.receiveShadow = v;
     }
 });
+tm.hybrid.ThreeElement.defineInstanceMethod("setReceiveShadow", function(v) {
+    this.receiveShadow = v;
+    return this;
+});
+
 tm.hybrid.ThreeElement.prototype.accessor("frustumCulled", {
     get: function() {
         return this.threeObject.frustumCulled;
@@ -224,6 +318,7 @@ tm.hybrid.ThreeElement.prototype.accessor("frustumCulled", {
         this.threeObject.frustumCulled = v;
     }
 });
+
 tm.hybrid.ThreeElement.prototype.accessor("matrixAutoUpdate", {
     get: function() {
         return this.threeObject.matrixAutoUpdate;
@@ -232,6 +327,7 @@ tm.hybrid.ThreeElement.prototype.accessor("matrixAutoUpdate", {
         this.threeObject.matrixAutoUpdate = v;
     }
 });
+
 tm.hybrid.ThreeElement.prototype.accessor("matrixWorldNeedsUpdate", {
     get: function() {
         return this.threeObject.matrixWorldNeedsUpdate;
@@ -240,6 +336,7 @@ tm.hybrid.ThreeElement.prototype.accessor("matrixWorldNeedsUpdate", {
         this.threeObject.matrixWorldNeedsUpdate = v;
     }
 });
+
 tm.hybrid.ThreeElement.prototype.accessor("rotationAutoUpdate", {
     get: function() {
         return this.threeObject.rotationAutoUpdate;
@@ -248,6 +345,7 @@ tm.hybrid.ThreeElement.prototype.accessor("rotationAutoUpdate", {
         this.threeObject.rotationAutoUpdate = v;
     }
 });
+
 tm.hybrid.ThreeElement.prototype.accessor("userData", {
     get: function() {
         return this.threeObject.userData;
@@ -256,6 +354,7 @@ tm.hybrid.ThreeElement.prototype.accessor("userData", {
         this.threeObject.userData = v;
     }
 });
+
 tm.hybrid.ThreeElement.prototype.accessor("matrixWorld", {
     get: function() {
         return this.threeObject.matrixWorld;
@@ -265,51 +364,53 @@ tm.hybrid.ThreeElement.prototype.accessor("matrixWorld", {
     }
 });
 
-tm.hybrid.ThreeElement.prototype.applyMatrix = function(matrix) {
+tm.hybrid.ThreeElement.defineInstanceMethod("applyMatrix", function(matrix) {
     this.threeObject.applyMatrix(matrix);
     return this;
-};
-tm.hybrid.ThreeElement.prototype.translateX = function(distance) {
+});
+tm.hybrid.ThreeElement.defineInstanceMethod("translateX", function(distance) {
     this.threeObject.translateX(distance);
     return this;
-};
-tm.hybrid.ThreeElement.prototype.translateY = function(distance) {
+});
+tm.hybrid.ThreeElement.defineInstanceMethod("translateY", function(distance) {
     this.threeObject.translateY(distance);
     return this;
-};
-tm.hybrid.ThreeElement.prototype.translateZ = function(distance) {
+});
+tm.hybrid.ThreeElement.defineInstanceMethod("translateZ", function(distance) {
     this.threeObject.translateZ(distance);
     return this;
-};
-tm.hybrid.ThreeElement.prototype.localToWorld = function(vector) {
+});
+tm.hybrid.ThreeElement.defineInstanceMethod("localToWorld", function(vector) {
     this.threeObject.localToWorld(vector);
     return this;
-};
-tm.hybrid.ThreeElement.prototype.worldToLocal = function(vector) {
+});
+tm.hybrid.ThreeElement.defineInstanceMethod("worldToLocal", function(vector) {
     this.threeObject.worldToLocal(vector);
     return this;
-};
-tm.hybrid.ThreeElement.prototype.lookAt = function(vector) {
+});
+tm.hybrid.ThreeElement.defineInstanceMethod("lookAt", function(vector) {
     this.threeObject.lookAt(vector);
     return this;
-};
-tm.hybrid.ThreeElement.prototype.updateMatrix = function() {
+});
+tm.hybrid.ThreeElement.defineInstanceMethod("updateMatrix", function() {
     this.threeObject.updateMatrix();
     return this;
-};
-tm.hybrid.ThreeElement.prototype.updateMatrixWorld = function(force) {
+});
+tm.hybrid.ThreeElement.defineInstanceMethod("updateMatrixWorld", function(force) {
     this.threeObject.updateMatrixWorld(force);
     return this;
-};
-tm.hybrid.ThreeElement.prototype.getObjectByName = function(name, recursive) {
+});
+tm.hybrid.ThreeElement.defineInstanceMethod("getObjectByName", function(name, recursive) {
     return this.threeObject.getObjectByName(name, recursive);
-};
-tm.hybrid.ThreeElement.prototype.getObjectById = function(id, recursive) {
+});
+tm.hybrid.ThreeElement.defineInstanceMethod("getObjectById", function(id, recursive) {
     return this.threeObject.getObjectById(id, recursive);
-};
-tm.hybrid.ThreeElement.prototype.translateOnAxis = function(axis, distance) {
-    return this.threeObject.translateOnAxis(axis, distance);
-};
-tm.hybrid.ThreeElement.prototype.rotateOnAxis = function(axis, angle) {
-    return this.threeObject.rotateOnAxis(axis, angle);
-};
+});
+tm.hybrid.ThreeElement.defineInstanceMethod("translateOnAxis", function(axis, distance) {
+    this.threeObject.translateOnAxis(axis, distance);
+    return this;
+});
+tm.hybrid.ThreeElement.defineInstanceMethod("rotateOnAxis", function(axis, angle) {
+    this.threeObject.rotateOnAxis(axis, angle);
+    return this;
+});

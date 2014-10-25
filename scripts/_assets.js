@@ -3,8 +3,13 @@ gls3.assets = {
     "uiFont": "fonts/Oxygen/Oxygen-Regular.ttf",
     "numberFont": "fonts/UbuntuMono/UbuntuMono-Bold.ttf",
 
-    "test": {
+    "building": {
         url: "images/building.js",
+        type: "three",
+    },
+
+    "bg": {
+        url: "images/random.js",
         type: "three",
     },
 };
